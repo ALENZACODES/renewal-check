@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="John Khan">
+<title>Renewal Check: what your mortgage payment does at renewal</title>
+<meta name="description" content="Type in your mortgage balance and renewal offer. See your new payment and what happens if you keep paying what you pay now.">
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<header>
+  <h1>Renewal Check</h1>
+  <p>Your term is ending. See your new payment, and what happens if you try to keep paying what you pay today.</p>
+</header>
+<main>
+  <section class="grid">
+    <form id="f" novalidate>
+      <label>Balance at renewal ($)<input id="balance" type="number" inputmode="decimal" min="0" step="1000" value="400000"><small class="err" data-for="balance"></small></label>
+      <label>Years left on amortization<input id="years" type="number" inputmode="decimal" min="1" max="40" step="1" value="20"><small class="err" data-for="years"></small></label>
+      <label>Current rate (%)<input id="currentRate" type="number" inputmode="decimal" min="0" max="25" step="0.01" value="2.29"><small class="err" data-for="currentRate"></small></label>
+      <label>Rate you were offered (%)<input id="offerRate" type="number" inputmode="decimal" min="0" max="25" step="0.01" value="4.49"><small class="err" data-for="offerRate"></small></label>
+      <p class="note">Monthly payments. Example numbers are filled in so you can see how it works.</p>
+    </form>
+    <div id="results" aria-live="polite"></div>
+  </section>
+  <section>
+    <h2>Other rates</h2>
+    <table><thead><tr><th>Rate</th><th>Monthly payment</th><th>Change vs. today</th></tr></thead><tbody id="scen"></tbody></table>
+  </section>
+  <section>
+    <h2>Before you sign</h2>
+    <ol>
+      <li>Is this the best rate you can offer me, and what term is it for?</li>
+      <li>Can I keep my current amortization, or are you changing it?</li>
+      <li>What are my prepayment limits, and what is the penalty if I break the term?</li>
+      <li>How many days do I have to accept, and can I hold this rate while I compare?</li>
+      <li>Is the mortgage insured or uninsured? That affects how easily I can move it.</li>
+    </ol>
+    <h2>Switching lenders at renewal</h2>
+    <p>Since November 21, 2024, OSFI no longer expects federally regulated lenders to apply the minimum qualifying rate (the stress test) when you move an uninsured mortgage to another federally regulated lender at renewal, as long as you don't add to the loan amount or the amortization. Lenders still check that you can afford it. <a href="https://www.osfi-bsif.gc.ca/en/supervision/financial-institutions/banks/minimum-qualifying-rate-uninsured-mortgages">OSFI: minimum qualifying rate for uninsured mortgages</a></p>
+  </section>
+</main>
+<footer>
+  <p>Estimates only, not financial advice. Uses semi-annual compounding, the usual way Canadian fixed-rate mortgages are calculated. Your lender's figures may differ by a few dollars. Nothing you type leaves this page.</p>
+  <p>Made by John Khan. <a href="https://github.com/ALENZACODES/renewal-check">Source code</a> (MIT licence).</p>
+</footer>
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
