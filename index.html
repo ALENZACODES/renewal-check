@@ -5,45 +5,82 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="John Khan">
 <title>Renewal Check: what your mortgage payment does at renewal</title>
-<meta name="description" content="Type in your mortgage balance and renewal offer. See your new payment and what happens if you keep paying what you pay now.">
+<meta name="description" content="See your new mortgage payment at renewal, what happens if you keep paying the same amount, and what it would cost to break your term early.">
+<meta property="og:title" content="Renewal Check">
+<meta property="og:description" content="See your new mortgage payment at renewal, and what happens if you keep paying what you pay now.">
+<meta property="og:image" content="https://alenzacodes.github.io/renewal-check/docs/screenshot-desktop.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23011F5B'/%3E%3Cpath d='M8 17l5 5 11-12' stroke='white' stroke-width='3' fill='none'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="src/style.css">
 </head>
 <body>
-<header>
-  <h1>Renewal Check</h1>
-  <p>Your term is ending. See your new payment, and what happens if you try to keep paying what you pay today.</p>
+<a class="skip" href="#main" data-t="skip">Skip to calculator</a>
+<header class="top">
+  <div class="wrap bar">
+    <h1 data-t="title">Renewal Check</h1>
+    <div class="toggles">
+      <button id="langBtn" type="button" lang="fr">Français</button>
+      <button id="themeBtn" type="button" aria-pressed="false">Navy and red</button>
+    </div>
+  </div>
+  <p class="wrap tagline" data-t="tagline"></p>
 </header>
-<main>
-  <section class="grid">
+<main id="main" class="wrap">
+  <section class="grid" aria-labelledby="s1">
     <form id="f" novalidate>
-      <label>Balance at renewal ($)<input id="balance" type="number" inputmode="decimal" min="0" step="1000" value="400000"><small class="err" data-for="balance"></small></label>
-      <label>Years left on amortization<input id="years" type="number" inputmode="decimal" min="1" max="40" step="1" value="20"><small class="err" data-for="years"></small></label>
-      <label>Current rate (%)<input id="currentRate" type="number" inputmode="decimal" min="0" max="25" step="0.01" value="2.29"><small class="err" data-for="currentRate"></small></label>
-      <label>Rate you were offered (%)<input id="offerRate" type="number" inputmode="decimal" min="0" max="25" step="0.01" value="4.49"><small class="err" data-for="offerRate"></small></label>
-      <p class="note">Monthly payments. Example numbers are filled in so you can see how it works.</p>
+      <h2 id="s1" data-t="s1"></h2>
+      <label for="balance" data-t="balance"></label><input id="balance" type="number" inputmode="decimal" min="0" step="1000" value="400000" aria-describedby="e-balance"><small class="err" id="e-balance" data-for="balance"></small>
+      <label for="years" data-t="years"></label><input id="years" type="number" inputmode="decimal" min="1" max="40" step="1" value="20" aria-describedby="e-years"><small class="err" id="e-years" data-for="years"></small>
+      <label for="currentRate" data-t="currentRate"></label><input id="currentRate" type="number" inputmode="decimal" min="0" max="25" step="0.01" value="2.29" aria-describedby="e-currentRate"><small class="err" id="e-currentRate" data-for="currentRate"></small>
+      <label for="offerRate" data-t="offerRate"></label>
+      <div class="slider"><input id="offerRate" type="number" inputmode="decimal" min="0" max="25" step="0.01" value="4.49" aria-describedby="e-offerRate"><input id="offerSlide" type="range" min="0" max="10" step="0.05" value="4.49" aria-label="Offered rate slider"></div>
+      <small class="err" id="e-offerRate" data-for="offerRate"></small>
+      <p class="note" data-t="formNote"></p>
     </form>
-    <div id="results" aria-live="polite"></div>
+    <div id="results" class="card" aria-live="polite"></div>
   </section>
-  <section>
-    <h2>Other rates</h2>
-    <table><thead><tr><th>Rate</th><th>Monthly payment</th><th>Change vs. today</th></tr></thead><tbody id="scen"></tbody></table>
+
+  <section aria-labelledby="s2"><h2 id="s2" data-t="s2"></h2>
+    <div class="tablewrap"><table><thead><tr><th scope="col" data-t="rate"></th><th scope="col" data-t="monthly"></th><th scope="col" data-t="vsToday"></th></tr></thead><tbody id="scen"></tbody></table></div>
   </section>
-  <section>
-    <h2>Before you sign</h2>
-    <ol>
-      <li>Is this the best rate you can offer me, and what term is it for?</li>
-      <li>Can I keep my current amortization, or are you changing it?</li>
-      <li>What are my prepayment limits, and what is the penalty if I break the term?</li>
-      <li>How many days do I have to accept, and can I hold this rate while I compare?</li>
-      <li>Is the mortgage insured or uninsured? That affects how easily I can move it.</li>
-    </ol>
-    <h2>Switching lenders at renewal</h2>
-    <p>Since November 21, 2024, OSFI no longer expects federally regulated lenders to apply the minimum qualifying rate (the stress test) when you move an uninsured mortgage to another federally regulated lender at renewal, as long as you don't add to the loan amount or the amortization. Lenders still check that you can afford it. <a href="https://www.osfi-bsif.gc.ca/en/supervision/financial-institutions/banks/minimum-qualifying-rate-uninsured-mortgages">OSFI: minimum qualifying rate for uninsured mortgages</a></p>
+
+  <section aria-labelledby="s4" class="share"><h2 id="s4" data-t="s4"></h2>
+    <canvas id="cardCanvas" width="1200" height="630" role="img" aria-label="Result card"></canvas>
+    <div class="row-btns"><button id="copyBtn" type="button" data-t="share"></button><button id="dlBtn" type="button" data-t="card"></button><span id="copied" role="status"></span></div>
+    <p class="note" data-t="shareNote"></p>
+  </section>
+
+  <section aria-labelledby="s3"><h2 id="s3" data-t="s3"></h2>
+    <p data-t="s3note"></p>
+    <div class="grid">
+      <form id="pf" novalidate>
+        <label for="pBalance" data-t="pBalance"></label><input id="pBalance" type="number" inputmode="decimal" min="0" value="400000">
+        <label for="pRate" data-t="pRate"></label><input id="pRate" type="number" inputmode="decimal" min="0" max="25" step="0.01" value="4.29">
+        <label for="pMonths" data-t="pMonths"></label><input id="pMonths" type="number" inputmode="numeric" min="1" max="120" value="36">
+        <label for="pSigned" data-t="pSigned"></label><input id="pSigned" type="month" min="2010-01" value="2024-10">
+        <fieldset><legend data-t="pType"></legend>
+          <label class="inline"><input type="radio" name="ptype" value="fixed" checked> <span data-t="fixed"></span></label>
+          <label class="inline"><input type="radio" name="ptype" value="variable"> <span data-t="variable"></span></label>
+        </fieldset>
+        <fieldset id="methodSet"><legend data-t="method"></legend>
+          <label class="inline"><input type="radio" name="method" value="discount" checked> <span data-t="mDiscount"></span></label>
+          <label class="inline"><input type="radio" name="method" value="current"> <span data-t="mCurrent"></span></label>
+        </fieldset>
+        <div id="compareWrap" hidden><label for="pCompare" data-t="pCompare"></label><input id="pCompare" type="number" inputmode="decimal" min="0" max="25" step="0.01" value="4.29"></div>
+      </form>
+      <div id="presults" class="card" aria-live="polite"></div>
+    </div>
+    <p class="note" id="pNote"></p>
+    <p class="note"><a href="https://www.canada.ca/en/financial-consumer-agency/services/mortgages/reduce-prepayment-penalties.html">FCAC: prepayment penalties</a> · <a href="https://apps.td.com/mortgage-prepayment-calculator/">TD prepayment calculator</a> · <a href="https://www.atb.com/siteassets/legacy/HowPenaltiesCalculated.pdf">ATB: how penalties are calculated (PDF)</a></p>
+  </section>
+
+  <section aria-labelledby="s5"><h2 id="s5" data-t="s5"></h2><ol id="qs"></ol></section>
+  <section aria-labelledby="s6"><h2 id="s6" data-t="s6"></h2>
+    <p><span data-t="switch"></span> <a href="https://www.osfi-bsif.gc.ca/en/supervision/financial-institutions/banks/minimum-qualifying-rate-uninsured-mortgages" data-t="switchLink"></a></p>
   </section>
 </main>
-<footer>
-  <p>Estimates only, not financial advice. Uses semi-annual compounding, the usual way Canadian fixed-rate mortgages are calculated. Your lender's figures may differ by a few dollars. Nothing you type leaves this page.</p>
-  <p>Made by John Khan. <a href="https://github.com/ALENZACODES/renewal-check">Source code</a> (MIT licence).</p>
+<footer class="wrap">
+  <p data-t="foot"></p>
+  <p><span data-t="made"></span> <a href="https://github.com/ALENZACODES/renewal-check" data-t="src"></a> <span data-t="lic"></span></p>
 </footer>
 <script type="module" src="src/app.js"></script>
 </body>

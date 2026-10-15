@@ -55,3 +55,53 @@ export function check({ balance, years, currentRate, offerRate }) {
     scenarios,
   };
 }
+
+// ---------- Prepayment penalty (closed fixed-rate) ----------
+// Sources: FCAC https://www.canada.ca/en/financial-consumer-agency/services/mortgages/reduce-prepayment-penalties.html
+// TD (posted rate minus original discount) https://apps.td.com/mortgage-prepayment-calculator/
+// ATB (lender's current rate for the closest term, no discount) https://www.atb.com/siteassets/legacy/HowPenaltiesCalculated.pdf
+
+export function threeMonthsInterest(balance, ratePercent) {
+  return (balance * ratePercent) / 100 / 12 * 3;
+}
+
+// FCAC simplified IRD: A x (B - C) / 12 x D. Never negative.
+export function ird(balance, contractRate, compareRate, monthsLeft) {
+  return Math.max(0, (balance * (contractRate - compareRate)) / 100 / 12 * monthsLeft);
+}
+
+// Closest available posted term (1, 3 or 5 years) to the months left.
+export function closestTerm(monthsLeft, terms = [1, 3, 5]) {
+  const y = monthsLeft / 12;
+  return terms.reduce((best, t) => (Math.abs(t - y) < Math.abs(best - y) ? t : best), terms[0]);
+}
+
+// method: "discount" (posted now minus original discount) or "current" (lender's current rate, no discount)
+export function penalty({ balance, contractRate, monthsLeft, method, postedAtSigning, postedNowForTerm, lenderCurrentRate, variable = false }) {
+  const tmi = threeMonthsInterest(balance, contractRate);
+  if (variable) return { tmi, ird: 0, compareRate: null, discount: null, penalty: tmi, used: "tmi" };
+  let compareRate, discount = null;
+  if (method === "discount") {
+    discount = Math.max(0, postedAtSigning - contractRate);
+    compareRate = postedNowForTerm - discount;
+  } else {
+    compareRate = lenderCurrentRate;
+  }
+  const i = ird(balance, contractRate, compareRate, monthsLeft);
+  return { tmi, ird: i, compareRate, discount, penalty: Math.max(tmi, i), used: i > tmi ? "ird" : "tmi" };
+}
+
+// ---------- Shareable state ----------
+export const FIELDS = ["balance", "years", "currentRate", "offerRate"];
+export function encodeState(v) {
+  return FIELDS.map((k) => `${k[0]}=${encodeURIComponent(v[k])}`).join("&");
+}
+export function decodeState(query) {
+  const p = new URLSearchParams(query);
+  const out = {};
+  for (const k of FIELDS) {
+    const raw = p.get(k[0]);
+    if (raw !== null && raw !== "" && Number.isFinite(+raw)) out[k] = +raw;
+  }
+  return out;
+}

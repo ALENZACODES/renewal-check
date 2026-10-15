@@ -39,11 +39,18 @@ Off-white background, dark ink text, one deep green accent. System fonts. Big cl
 - Monthly payments only for the POC, because that is what most statements show.
 - No rate feed; the person types the rate they were offered.
 
+## Added after first build (John's direction, Oct 15)
+- Penalty estimator for leaving a closed term early: the higher of three months' interest or the IRD, with two IRD methods lenders use (posted rate minus original discount, as TD describes; lender's current rate with no discount, as ATB describes). Posted rates come from the Bank of Canada weekly series, including the posted rate in the month the person signed, so the discount is worked out for them.
+  - [ ] Matches the FCAC worked example: $200,000 at 6%, 36 months left, 4% comparison gives $3,000 three months' interest and $12,000 IRD.
+  - [ ] Variable rate uses three months' interest only.
+- Shareable result: a link that carries only the four inputs, and a downloadable image card.
+- French toggle, a navy and red colour option, keyboard and screen reader support, works on a phone.
+
 ## What We're Building
 The form, live results, keep-my-payment result, scenario table, questions list, switch note with source link, and a disclaimer that this is an estimate, not advice.
 
 ## Deferred From the POC
-Biweekly payments, prepayments, variable-rate mortgages, sharing a result.
+Biweekly payments, prepayment privileges, lender-specific posted rate tables.
 
 ## Non-Goals
 No lender ranking, no lead capture, no personal data collection.
