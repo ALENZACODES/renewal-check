@@ -9,7 +9,7 @@
   --card: #fff;
   --soft: #eef4f0;
 }
-:root.penn {
+:root.navy-theme {
   --bg: #f6f7fb;
   --ink: #0b1630;
   --accent: #011f5b;
@@ -291,4 +291,43 @@ footer {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* Navy and red wave theme (see theme/waves.css). Navy is the default; the green theme stays available. */
+.top.w-wave {
+  border-bottom: 0;
+  padding-bottom: 26px;
+}
+:root.navy-theme .top.w-wave {
+  background-color: var(--w-navy);
+  background-image: url("theme/wave-lines.svg");
+}
+:root:not(.navy-theme) .top.w-wave {
+  background-image: none;
+  background-color: var(--accent);
+  border-bottom: 6px solid var(--accent2);
+  margin-bottom: 0;
+  padding-bottom: 22px;
+}
+:root:not(.navy-theme) .top.w-wave::after {
+  display: none;
+}
+:root.navy-theme {
+  --bg: var(--w-cream);
+  --ink: var(--w-ink);
+  --muted: var(--w-muted);
+  --line: var(--w-line);
+}
+.top h1,
+main h2,
+main h3 {
+  font-family: var(--w-serif);
+  font-weight: 600;
+}
+.top h1 {
+  font-size: 2.2rem;
+}
+.foot .w-script {
+  font-size: 1.7em;
+  vertical-align: -0.15em;
 }
