@@ -8,7 +8,7 @@ const qs = new URLSearchParams(location.search);
 let lang =
   qs.get("lang") || localStorage.getItem("rc-lang") || ((navigator.language || "").startsWith("fr") ? "fr" : "en");
 if (!T[lang]) lang = "en";
-let penn = qs.get("theme") === "navy" || localStorage.getItem("rc-penn") === "1";
+let navyTheme = qs.get("theme") !== "green" && (qs.get("theme") === "navy" || localStorage.getItem("rc-navy") !== "0");
 const t = () => T[lang];
 const loc = () => (lang === "fr" ? "fr-CA" : "en-CA");
 const money = (n) => n.toLocaleString(loc(), { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
@@ -31,9 +31,9 @@ function applyText() {
   });
   $("langBtn").textContent = t().lang;
   $("langBtn").lang = lang === "fr" ? "en" : "fr";
-  $("themeBtn").textContent = penn ? t().themeOff : t().theme;
-  $("themeBtn").setAttribute("aria-pressed", String(penn));
-  root.classList.toggle("penn", penn);
+  $("themeBtn").textContent = navyTheme ? t().themeOff : t().theme;
+  $("themeBtn").setAttribute("aria-pressed", String(navyTheme));
+  root.classList.toggle("navy-theme", navyTheme);
   $("qs").innerHTML = t()
     .q.map((q) => `<li>${q}</li>`)
     .join("");
@@ -76,7 +76,11 @@ function render() {
         `<tr class="${Math.abs(s.rate - v.offerRate) < 1e-9 ? "offer" : ""}"><td>${pct(s.rate)}</td><td>${money(s.payment)}</td><td>${signed(s.change)}</td></tr>`,
     )
     .join("");
-  history.replaceState(null, "", `?${encodeState(v)}${lang === "fr" ? "&lang=fr" : ""}${penn ? "&theme=navy" : ""}`);
+  history.replaceState(
+    null,
+    "",
+    `?${encodeState(v)}${lang === "fr" ? "&lang=fr" : ""}${navyTheme ? "" : "&theme=green"}`,
+  );
   drawCard();
 }
 
@@ -184,8 +188,8 @@ $("langBtn").addEventListener("click", () => {
   renderPenalty();
 });
 $("themeBtn").addEventListener("click", () => {
-  penn = !penn;
-  localStorage.setItem("rc-penn", penn ? "1" : "0");
+  navyTheme = !navyTheme;
+  localStorage.setItem("rc-navy", navyTheme ? "1" : "0");
   applyText();
   render();
 });

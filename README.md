@@ -1,3 +1,5 @@
+![Renewal Check banner](docs/banner.png)
+
 # Renewal Check
 
 [![tests](https://github.com/ALENZACODES/renewal-check/actions/workflows/tests.yml/badge.svg)](https://github.com/ALENZACODES/renewal-check/actions/workflows/tests.yml)
