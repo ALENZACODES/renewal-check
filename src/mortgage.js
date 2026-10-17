@@ -28,7 +28,10 @@ export function validate({ balance, years, currentRate, offerRate }) {
   const errors = {};
   if (!(balance > 0)) errors.balance = "Enter a balance above zero.";
   if (!(years > 0 && years <= 40)) errors.years = "Enter between 1 month and 40 years.";
-  for (const [k, v] of [["currentRate", currentRate], ["offerRate", offerRate]]) {
+  for (const [k, v] of [
+    ["currentRate", currentRate],
+    ["offerRate", offerRate],
+  ]) {
     if (!(v >= 0 && v <= 25)) errors[k] = "Enter a rate from 0 to 25%.";
   }
   return errors;
@@ -49,9 +52,10 @@ export function check({ balance, years, currentRate, offerRate }) {
     currentPay,
     newPay,
     change: newPay - currentPay,
-    keep: months === null
-      ? { covers: false, interest: firstMonthInterest(balance, offerRate) }
-      : { covers: true, months, extraMonths: months - years * 12 },
+    keep:
+      months === null
+        ? { covers: false, interest: firstMonthInterest(balance, offerRate) }
+        : { covers: true, months, extraMonths: months - years * 12 },
     scenarios,
   };
 }
@@ -62,12 +66,12 @@ export function check({ balance, years, currentRate, offerRate }) {
 // ATB (lender's current rate for the closest term, no discount) https://www.atb.com/siteassets/legacy/HowPenaltiesCalculated.pdf
 
 export function threeMonthsInterest(balance, ratePercent) {
-  return (balance * ratePercent) / 100 / 12 * 3;
+  return ((balance * ratePercent) / 100 / 12) * 3;
 }
 
 // FCAC simplified IRD: A x (B - C) / 12 x D. Never negative.
 export function ird(balance, contractRate, compareRate, monthsLeft) {
-  return Math.max(0, (balance * (contractRate - compareRate)) / 100 / 12 * monthsLeft);
+  return Math.max(0, ((balance * (contractRate - compareRate)) / 100 / 12) * monthsLeft);
 }
 
 // Closest available posted term (1, 3 or 5 years) to the months left.
@@ -77,10 +81,20 @@ export function closestTerm(monthsLeft, terms = [1, 3, 5]) {
 }
 
 // method: "discount" (posted now minus original discount) or "current" (lender's current rate, no discount)
-export function penalty({ balance, contractRate, monthsLeft, method, postedAtSigning, postedNowForTerm, lenderCurrentRate, variable = false }) {
+export function penalty({
+  balance,
+  contractRate,
+  monthsLeft,
+  method,
+  postedAtSigning,
+  postedNowForTerm,
+  lenderCurrentRate,
+  variable = false,
+}) {
   const tmi = threeMonthsInterest(balance, contractRate);
   if (variable) return { tmi, ird: 0, compareRate: null, discount: null, penalty: tmi, used: "tmi" };
-  let compareRate, discount = null;
+  let compareRate,
+    discount = null;
   if (method === "discount") {
     discount = Math.max(0, postedAtSigning - contractRate);
     compareRate = postedNowForTerm - discount;

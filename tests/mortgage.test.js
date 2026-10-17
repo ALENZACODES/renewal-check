@@ -9,7 +9,7 @@ test("semi-annual monthly rate", () => {
 
 test("payment, $100k 25y 5%", () => {
   // Known Canadian table value: about $581.60
-  assert.ok(Math.abs(payment(100000, 5, 25) - 581.60) < 0.05);
+  assert.ok(Math.abs(payment(100000, 5, 25) - 581.6) < 0.05);
 });
 
 test("zero rate", () => {
@@ -60,8 +60,21 @@ test("IRD never negative when rates rose", () => {
 
 test("posted-minus-discount method widens the IRD", () => {
   // posted 6.50 at signing, contract 4.50: discount 2.00. Posted now for 3y 6.05, so compare at 4.05.
-  const withDisc = penalty({ balance: 400000, contractRate: 4.5, monthsLeft: 36, method: "discount", postedAtSigning: 6.5, postedNowForTerm: 6.05 });
-  const noDisc = penalty({ balance: 400000, contractRate: 4.5, monthsLeft: 36, method: "current", lenderCurrentRate: 6.05 });
+  const withDisc = penalty({
+    balance: 400000,
+    contractRate: 4.5,
+    monthsLeft: 36,
+    method: "discount",
+    postedAtSigning: 6.5,
+    postedNowForTerm: 6.05,
+  });
+  const noDisc = penalty({
+    balance: 400000,
+    contractRate: 4.5,
+    monthsLeft: 36,
+    method: "current",
+    lenderCurrentRate: 6.05,
+  });
   assert.ok(withDisc.discount > 0);
   assert.ok(withDisc.penalty > noDisc.penalty);
 });
@@ -84,9 +97,11 @@ test("share state round-trips and ignores junk", () => {
 });
 
 test("payment always positive and finite across a grid", () => {
-  for (const b of [1000, 250000, 2000000]) for (const y of [1, 10, 25, 40]) for (const r of [0, 0.5, 5, 12, 25]) {
-    const p = payment(b, r, y);
-    assert.ok(Number.isFinite(p) && p > 0, `${b} ${y} ${r}`);
-    assert.ok(Math.abs(payoffMonths(b, r, p) - y * 12) < 1e-6);
-  }
+  for (const b of [1000, 250000, 2000000])
+    for (const y of [1, 10, 25, 40])
+      for (const r of [0, 0.5, 5, 12, 25]) {
+        const p = payment(b, r, y);
+        assert.ok(Number.isFinite(p) && p > 0, `${b} ${y} ${r}`);
+        assert.ok(Math.abs(payoffMonths(b, r, p) - y * 12) < 1e-6);
+      }
 });
