@@ -10,12 +10,12 @@
   --soft: #eef4f0;
 }
 :root.navy-theme {
-  --bg: #f6f7fb;
-  --ink: #0b1630;
+  --bg: var(--w-cream);
+  --ink: var(--w-ink);
   --accent: #011f5b;
   --accent2: #990000;
-  --muted: #4a5570;
-  --line: #d3d8e6;
+  --muted: var(--w-muted);
+  --line: var(--w-line);
   --warn: #990000;
   --soft: #eaeef7;
 }
@@ -311,12 +311,6 @@ footer {
 }
 :root:not(.navy-theme) .top.w-wave::after {
   display: none;
-}
-:root.navy-theme {
-  --bg: var(--w-cream);
-  --ink: var(--w-ink);
-  --muted: var(--w-muted);
-  --line: var(--w-line);
 }
 .top h1,
 main h2,
