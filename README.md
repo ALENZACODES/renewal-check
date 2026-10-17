@@ -1,5 +1,9 @@
 # Renewal Check
 
+[![tests](https://github.com/ALENZACODES/renewal-check/actions/workflows/tests.yml/badge.svg)](https://github.com/ALENZACODES/renewal-check/actions/workflows/tests.yml)
+
+**Live:** https://alenzacodes.github.io/renewal-check/
+
 For Canadian homeowners whose mortgage term is ending. Type in four numbers from your statement and the rate you were offered, and Renewal Check shows:
 
 - your new monthly payment and the change per month and per year
@@ -10,8 +14,6 @@ For Canadian homeowners whose mortgage term is ending. Type in four numbers from
 
 English and French. Works on a phone and with a keyboard or screen reader. Nothing you type leaves the page.
 
-Live: https://alenzacodes.github.io/renewal-check/
-
 ![Renewal Check on desktop](docs/screenshot-desktop.png)
 
 | Phone | Français |
@@ -19,6 +21,7 @@ Live: https://alenzacodes.github.io/renewal-check/
 | ![Phone view](docs/screenshot-mobile.png) | ![French view](docs/screenshot-fr.png) |
 
 ## Run it
+
 No install needed. Open the live link, or run locally:
 
     python3 -m http.server 8000
@@ -26,13 +29,15 @@ No install needed. Open the live link, or run locally:
 then open http://localhost:8000/.
 
 ## Tests
+
 Needs Node 20 or later. No dependencies.
 
     node --test
 
-The tests check the payment maths against a standard table value, the penalty maths against the worked example from the Financial Consumer Agency of Canada, a grid of payment and payoff cases, sharing links, and that the English and French text match.
+18 tests check the payment maths against a standard table value, the penalty maths against the worked example from the Financial Consumer Agency of Canada, a grid of payment and payoff cases, sharing links, and that the English and French text match. They run on every push through GitHub Actions.
 
 ## How the maths works
+
 - Payments use semi-annual compounding, the usual convention for Canadian fixed-rate mortgages: monthly rate = (1 + rate/2)^(1/6) - 1.
 - Three months' interest = balance x rate / 12 x 3.
 - Interest rate differential = balance x (your rate - comparison rate) / 12 x months left.
@@ -41,6 +46,7 @@ The tests check the payment maths against a standard table value, the penalty ma
 Details are in `devpost/spec.md` and `src/mortgage.js`.
 
 ## Data and sources
+
 - Bank of Canada, conventional mortgage rates for 1, 3 and 5-year terms (series V80691333, V80691334, V80691335), weekly averages of chartered banks' posted rates: https://www.bankofcanada.ca/valet/ . These are not any single lender's rates.
 - FCAC, prepayment penalties: https://www.canada.ca/en/financial-consumer-agency/services/mortgages/reduce-prepayment-penalties.html
 - TD prepayment calculator: https://apps.td.com/mortgage-prepayment-calculator/
@@ -50,6 +56,7 @@ Details are in `devpost/spec.md` and `src/mortgage.js`.
 Estimates only, not financial advice.
 
 ## Planning documents
+
 Built with the Devpost Learn Skill Pack for Build With AI: Basics. The plan is in `devpost/scope.md`, `devpost/prd.md` and `devpost/spec.md` (copies at the top level too).
 
 ## Licence

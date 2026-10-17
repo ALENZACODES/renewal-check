@@ -19,7 +19,7 @@ They type four numbers from their mortgage statement and the rate they've been o
 Calm and plain, like a well-made bank statement. No hype, no sign-up. Works on a phone.
 
 ## Why This Matters to the Learner
-John is a licensed mortgage broker. Renewal is where he sees people lose money by signing the first offer.
+John has worked in Canadian mortgages for about 20 years. Renewal is where he sees people lose money by signing the first offer.
 
 ## What "Working" Looks Like
 Enter a $400,000 balance with 20 years left at a 2.29% old rate and a 4.49% offer. The screen shows the new payment, how much more that is per month, and that keeping the old payment would stretch the mortgage by many years. That last line is the moment.
@@ -31,4 +31,4 @@ One page. Inputs, results, a rate scenario table, a short list of questions to a
 Saving or sharing a result, prepayment options, variable-rate trigger points.
 
 ## Explicitly Cut
-Live rate feeds (would need a licensed data source and goes stale), accounts (nothing to protect yet), lender recommendations (John is a licensed broker; advice needs a proper conversation, not a widget).
+Live rate feeds (would need a licensed data source and goes stale), accounts (nothing to protect yet), lender recommendations (advice needs a proper conversation, not a widget).
