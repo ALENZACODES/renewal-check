@@ -55,6 +55,21 @@ Details are in `devpost/spec.md` and `src/mortgage.js`.
 
 Estimates only, not financial advice.
 
+## Files
+
+    index.html              the page
+    src/app.js              form, results, sharing link and image
+    src/mortgage.js         payment, payoff and penalty maths
+    src/i18n.js             English and French text
+    src/rates.js            Bank of Canada posted-rate snapshot
+    src/style.css
+    tests/                  maths and translation tests
+
+## Limits
+
+- Penalty estimates use the two common IRD methods. Your lender's contract decides the real figure.
+- Posted rates are averages for chartered banks, not any one lender's rate.
+
 ## Planning documents
 
 Built with the Devpost Learn Skill Pack for Build With AI: Basics. The plan is in `devpost/scope.md`, `devpost/prd.md` and `devpost/spec.md` (copies at the top level too).
