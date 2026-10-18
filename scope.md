@@ -31,4 +31,4 @@ One page. Inputs, results, a rate scenario table, a short list of questions to a
 Saving or sharing a result, prepayment options, variable-rate trigger points.
 
 ## Explicitly Cut
-Live rate feeds (would need a licensed data source and goes stale), accounts (nothing to protect yet), lender recommendations (advice needs a proper conversation, not a widget).
+Live rate feeds (would need a paid data feed and goes stale), accounts (nothing to protect yet), lender recommendations (advice needs a proper conversation, not a widget).
