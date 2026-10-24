@@ -2,7 +2,9 @@
 
 # Renewal Check
 
-[![tests](https://github.com/ALENZACODES/renewal-check/actions/workflows/tests.yml/badge.svg)](https://github.com/ALENZACODES/renewal-check/actions/workflows/tests.yml)
+**See your new mortgage payment at renewal, and what happens if you keep paying what you pay now.**
+
+[![Live demo](https://img.shields.io/badge/live_demo-open-011F5B?style=flat-square)](https://alenzacodes.github.io/renewal-check/) [![Licence: MIT](https://img.shields.io/badge/licence-MIT-990000?style=flat-square)](LICENSE) ![Built with JavaScript](https://img.shields.io/badge/built_with-JavaScript-4a4a4a?style=flat-square) [![tests](https://github.com/ALENZACODES/renewal-check/actions/workflows/tests.yml/badge.svg)](https://github.com/ALENZACODES/renewal-check/actions/workflows/tests.yml)
 
 **Live:** https://alenzacodes.github.io/renewal-check/
 
@@ -22,7 +24,16 @@ English and French. Works on a phone and with a keyboard or screen reader. Nothi
 |---|---|
 | ![Phone view](docs/screenshot-mobile.png) | ![French view](docs/screenshot-fr.png) |
 
-## Run it
+## How the maths works
+
+- Payments use semi-annual compounding, the usual convention for Canadian fixed-rate mortgages: monthly rate = (1 + rate/2)^(1/6) - 1.
+- Three months' interest = balance x rate / 12 x 3.
+- Interest rate differential = balance x (your rate - comparison rate) / 12 x months left.
+- Comparison rate depends on your lender. Some use today's posted rate for the closest term minus the discount you got when you signed (TD describes this). Others use their current rate with no discount (ATB describes this). Your contract decides.
+
+Details are in `devpost/spec.md` and `src/mortgage.js`.
+
+## Quick start
 
 No install needed. Open the live link, or run locally:
 
@@ -38,15 +49,6 @@ Needs Node 20 or later. No dependencies.
 
 18 tests check the payment maths against a standard table value, the penalty maths against the worked example from the Financial Consumer Agency of Canada, a grid of payment and payoff cases, sharing links, and that the English and French text match. They run on every push through GitHub Actions.
 
-## How the maths works
-
-- Payments use semi-annual compounding, the usual convention for Canadian fixed-rate mortgages: monthly rate = (1 + rate/2)^(1/6) - 1.
-- Three months' interest = balance x rate / 12 x 3.
-- Interest rate differential = balance x (your rate - comparison rate) / 12 x months left.
-- Comparison rate depends on your lender. Some use today's posted rate for the closest term minus the discount you got when you signed (TD describes this). Others use their current rate with no discount (ATB describes this). Your contract decides.
-
-Details are in `devpost/spec.md` and `src/mortgage.js`.
-
 ## Data and sources
 
 - Bank of Canada, conventional mortgage rates for 1, 3 and 5-year terms (series V80691333, V80691334, V80691335), weekly averages of chartered banks' posted rates: https://www.bankofcanada.ca/valet/ . These are not any single lender's rates.
@@ -56,6 +58,11 @@ Details are in `devpost/spec.md` and `src/mortgage.js`.
 - OSFI, minimum qualifying rate for uninsured mortgages: https://www.osfi-bsif.gc.ca/en/supervision/financial-institutions/banks/minimum-qualifying-rate-uninsured-mortgages
 
 Estimates only, not financial advice.
+
+## Limits
+
+- Penalty estimates use the two common IRD methods. Your lender's contract decides the real figure.
+- Posted rates are averages for chartered banks, not any one lender's rate.
 
 ## Files
 
@@ -67,14 +74,14 @@ Estimates only, not financial advice.
     src/style.css
     tests/                  maths and translation tests
 
-## Limits
-
-- Penalty estimates use the two common IRD methods. Your lender's contract decides the real figure.
-- Posted rates are averages for chartered banks, not any one lender's rate.
-
 ## Planning documents
 
 Built with the Devpost Learn Skill Pack for Build With AI: Basics. The plan is in `devpost/scope.md`, `devpost/prd.md` and `devpost/spec.md` (copies at the top level too).
 
 ## Licence
+
 MIT. Copyright 2026 John Khan.
+
+---
+
+More of my work is on my [GitHub profile](https://github.com/ALENZACODES).
